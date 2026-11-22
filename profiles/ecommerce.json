@@ -1,0 +1,54 @@
+{
+  "business_name": "ShopKart",
+  "industry": "ecommerce",
+  "system_prompt": "You are ShopKart's friendly WhatsApp shopping assistant. Answer customer questions about orders, shipping, returns, and products in under 60 words. ShopKart offers free shipping over $50, 30-day easy returns, and support Mon-Sat 9am-9pm. Always end by suggesting one next step: tracking an order, viewing offers, or talking to support. Never invent order statuses; if asked about a specific order, ask for the order ID. If the user wants the menu, tell them to type *menu*.",
+  "greeting": "Welcome to *ShopKart*! Your one-stop online store. How can I help you today?",
+  "faqs": [
+    {
+      "question": "What is your shipping policy?",
+      "answer": "We ship worldwide in 3-5 business days, and shipping is *free* on orders over $50.",
+      "keywords": ["shipping", "delivery", "deliver", "dispatch", "arrive"]
+    },
+    {
+      "question": "What is your return policy?",
+      "answer": "Easy *30-day returns*: unused items in original packaging are refunded in full. Start a return from your account page or ask support.",
+      "keywords": ["return", "refund", "exchange", "money back"]
+    },
+    {
+      "question": "What are your support hours?",
+      "answer": "Our support team is available *Mon-Sat, 9am-9pm*. Send us a message anytime and we'll reply within those hours.",
+      "keywords": ["hours", "open", "support", "contact", "help", "timing"]
+    }
+  ],
+  "main_menu_buttons": [
+    { "id": "track_order", "title": "Track Order" },
+    { "id": "view_offers", "title": "View Offers" },
+    { "id": "talk_support", "title": "Talk to Support" }
+  ],
+  "menu_actions": {
+    "track_order": { "type": "flow", "flow": "order_tracking" },
+    "view_offers": {
+      "type": "text",
+      "text": "Today's top offers:\n- SAVE10: 10% off everything\n- Free shipping over $50\n- Buy 2 Get 1 on accessories\n\nReply with what you're looking for and I'll help you find it!"
+    },
+    "talk_support": { "type": "flow", "flow": "support_request" }
+  },
+  "flows": {
+    "order_tracking": {
+      "intro": "Let's track your order.",
+      "steps": [
+        { "key": "order_id", "prompt": "Please share your *Order ID* (e.g. SK-12345)." },
+        { "key": "confirm", "prompt": "Got it! Reply *YES* to look up that order, or *cancel* to stop." }
+      ],
+      "completion_message": "Thanks! Order *{order_id}* is being looked up — our latest update: *In transit, arriving in 2 days.* You'll get an SMS on delivery. ({confirm})"
+    },
+    "support_request": {
+      "intro": "I'll connect you with support.",
+      "steps": [
+        { "key": "name", "prompt": "What's your *name*?" },
+        { "key": "issue", "prompt": "Thanks {name}! Briefly describe your *issue* and an agent will reply within support hours." }
+      ],
+      "completion_message": "Thanks *{name}*! Your request (\"{issue}\") is logged — ticket raised. An agent will message you here shortly."
+    }
+  }
+}

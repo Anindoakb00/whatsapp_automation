@@ -1,0 +1,52 @@
+{
+  "business_name": "CityCare Clinic",
+  "industry": "clinic",
+  "system_prompt": "You are CityCare Clinic's polite WhatsApp receptionist. Answer questions about appointments, timings, doctors, and services in under 60 words. The clinic is open Mon-Sat 9am-8pm, Sun 10am-2pm. General visits cost $30, specialists $60. Always end by suggesting one next step: booking an appointment, checking timings, or talking to the front desk. Never give medical diagnoses; for symptoms, advise booking a visit. If the user wants the menu, tell them to type *menu*.",
+  "greeting": "Welcome to *CityCare Clinic*! Your health is our priority. How can I help you today?",
+  "faqs": [
+    {
+      "question": "What are the clinic timings?",
+      "answer": "We're open *Mon-Sat 9am-8pm* and *Sun 10am-2pm*. Walk-ins are welcome, but booked patients are seen first.",
+      "keywords": ["timing", "hours", "open", "close", "when", "sunday"]
+    },
+    {
+      "question": "What are the consultation fees?",
+      "answer": "General consultation is *$30* and specialist consultation is *$60*. Reports and follow-up within 7 days are free.",
+      "keywords": ["fee", "fees", "cost", "price", "charge", "payment"]
+    },
+    {
+      "question": "Where is the clinic located?",
+      "answer": "You'll find us at *123 Health Street, Downtown* — 5 min from Central Station. Free parking behind the building.",
+      "keywords": ["location", "address", "where", "reach", "direction", "parking"]
+    }
+  ],
+  "main_menu_buttons": [
+    { "id": "book_appointment", "title": "Book Visit" },
+    { "id": "clinic_timings", "title": "Timings" },
+    { "id": "talk_reception", "title": "Reception" }
+  ],
+  "menu_actions": {
+    "book_appointment": { "type": "flow", "flow": "appointment_booking" },
+    "clinic_timings": { "type": "faq", "faq": "What are the clinic timings?" },
+    "talk_reception": { "type": "flow", "flow": "callback_request" }
+  },
+  "flows": {
+    "appointment_booking": {
+      "intro": "Let's book your appointment.",
+      "steps": [
+        { "key": "name", "prompt": "What's the patient's *full name*?" },
+        { "key": "date", "prompt": "Thanks! Which *date* works for you? (e.g. Monday, or 25 Nov)" },
+        { "key": "confirm", "prompt": "Reply *YES* to confirm the booking, or *cancel* to stop." }
+      ],
+      "completion_message": "Appointment confirmed for *{name}* on *{date}* ({confirm}). Please arrive 10 minutes early. Reply *menu* anytime for more options."
+    },
+    "callback_request": {
+      "intro": "I'll have our front desk call you back.",
+      "steps": [
+        { "key": "name", "prompt": "What's your *name*?" },
+        { "key": "reason", "prompt": "Thanks {name}! What's the *reason* for the callback?" }
+      ],
+      "completion_message": "Thanks *{name}*! The front desk will call you back about \"{reason}\" within clinic hours."
+    }
+  }
+}
